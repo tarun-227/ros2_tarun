@@ -46,12 +46,24 @@ from std_msgs.msg import Int32
 
 class NumberPublisher(Node):
     def __init__(self):
+        """
+        Constructor function called once when the node object is created.
+        Initializes the publisher, timer, and the starting number.
+        """
         super().__init__('number_publisher')
+        # Create a publisher on topic 'number' with message type Int32 and queue size 10
         self.publisher_ = self.create_publisher(Int32, 'number', 10)
+        # Create a timer to call 'timer_callback' every 1 second
         self.timer = self.create_timer(1.0, self.timer_callback)
+        # Initialize the number to be published
         self.i = 0
 
     def timer_callback(self):
+        """
+        Called every 1 second by the timer.
+        Creates a message, sets the data to current number,
+        publishes the message, logs info, and increments the number.
+        """
         msg = Int32()
         msg.data = self.i
         self.publisher_.publish(msg)
@@ -59,11 +71,15 @@ class NumberPublisher(Node):
         self.i += 1
 
 def main(args=None):
-    rclpy.init(args=args)
-    node = NumberPublisher()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    """
+    Main function that initializes ROS 2, creates the node,
+    spins it to process callbacks, and finally cleans up.
+    """
+    rclpy.init(args=args)                # Initialize ROS 2 communications
+    node = NumberPublisher()             # Create node instance
+    rclpy.spin(node)                     # Keep node alive, processing callbacks
+    node.destroy_node()                  # Cleanup node resources
+    rclpy.shutdown()                    # Shutdown ROS 2 communications
 
 if __name__ == '__main__':
     main()
@@ -80,7 +96,13 @@ from std_msgs.msg import Int32
 
 class NumberSubscriber(Node):
     def __init__(self):
+        """
+        Constructor function called once when the node object is created.
+        Initializes the subscriber on the 'number' topic.
+        """
         super().__init__('number_subscriber')
+        # Create a subscription to 'number' topic with message type Int32
+        # Calls listener_callback when message is received
         self.subscription = self.create_subscription(
             Int32,
             'number',
@@ -88,15 +110,23 @@ class NumberSubscriber(Node):
             10)
 
     def listener_callback(self, msg):
+        """
+        Called automatically when a new message is received on 'number' topic.
+        Calculates the square of the received number and logs the result.
+        """
         square = msg.data ** 2
         self.get_logger().info(f'Received: {msg.data}, Square: {square}')
 
 def main(args=None):
-    rclpy.init(args=args)
-    node = NumberSubscriber()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    """
+    Main function that initializes ROS 2, creates the subscriber node,
+    spins it to process callbacks, and cleans up afterward.
+    """
+    rclpy.init(args=args)               # Initialize ROS 2 communications
+    node = NumberSubscriber()           # Create subscriber node instance
+    rclpy.spin(node)                    # Keep node alive, processing callbacks
+    node.destroy_node()                 # Cleanup node resources
+    rclpy.shutdown()                   # Shutdown ROS 2 communications
 
 if __name__ == '__main__':
     main()
