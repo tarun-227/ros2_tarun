@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Wall -->
+    <model name="wall">
+      <pose>1.0 0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="wall_collision">
+          <geometry>
+            <box><size>0.1 1.0 1.0</size></box>
+          </geometry>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box><size>0.1 1.0 1.0</size></box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Orange Box -->
+    <model name="orange_box">
+      <static>true</static>
+      <pose>1 0 0.2 0 0 0</pose>
+      <link name="link">
+        <collision name="orange_box_collision">
+          <geometry>
+            <box><size>0.4 0.4 0.4</size></box>
+          </geometry>
+        </collision>
+        <visual name="orange_box_visual">
+          <geometry>
+            <box><size>0.4 0.4 0.4</size></box>
+          </geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
