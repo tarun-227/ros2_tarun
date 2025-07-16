@@ -65,8 +65,4 @@ This mimics a basic **vision-based perception system**.
 
 ---
 
-## ✅ Final Outcome
 
-- Launch robot in Gazebo with wall & orange box using:
-  ```bash
-  ros2 launch bot_description gazebo.launch.py
